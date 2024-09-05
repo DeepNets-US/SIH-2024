@@ -94,42 +94,49 @@ async function detectImage() {
                 // Make predictions (generated map output)
                 const prediction = await model.predict(imageTensor);
 
-                // Assuming the prediction is an image tensor, process and display it
-                const predictedImageTensor = prediction.squeeze();  // Remove batch dimension if present
-
-                // Create a canvas for displaying the generated image
-                const displayCanvas = document.createElement('canvas');
-                const displayCtx = displayCanvas.getContext('2d');
+                // Assuming the prediction is a tensor of shape (1, 512, 512, 1)
+                const predictedImageTensor = prediction.squeeze();  // Remove batch dimension
 
                 // Get dimensions of the predicted image tensor
-                const [height, width, channels] = predictedImageTensor.shape;
+                const height = predictedImageTensor.shape[0];
+                const width = predictedImageTensor.shape[1];
 
-                // Set canvas size to the dimensions of the generated image
+                // Resize the canvas to match the generated map size
+                const displayCanvas = document.createElement('canvas');
                 displayCanvas.width = width;
                 displayCanvas.height = height;
+                const displayCtx = displayCanvas.getContext('2d');
 
-                // Create an ImageData object and fill it with the predicted image data
-                const imageData = displayCtx.createImageData(width, height);
-                const data = predictedImageTensor.dataSync();  // Get pixel data
+                // Create an ImageData object to hold the pixel data
+                const imgData = displayCtx.createImageData(width, height);
+                const predictedData = predictedImageTensor.arraySync(); // Extract tensor data into a regular array
 
-                // Loop through the data and set pixel values (handle RGB or RGBA)
-                for (let i = 0; i < data.length; i++) {
-                    imageData.data[i] = data[i] * 255;  // Rescale the pixel value to [0, 255]
+                // Loop through each pixel and set the grayscale value
+                for (let y = 0; y < imgData.height; y++) {
+                    for (let x = 0; x < imgData.width; x++) {
+                        const pixelIndex = (y * imgData.width + x) * 4;
+                        const grayscaleValue = predictedData[y][x] * 255; // Scale from [0, 1] to [0, 255]
+
+                        // Set R, G, B to the same grayscale value
+                        imgData.data[pixelIndex] = grayscaleValue;
+                        imgData.data[pixelIndex + 1] = grayscaleValue;
+                        imgData.data[pixelIndex + 2] = grayscaleValue;
+                        imgData.data[pixelIndex + 3] = 255; // Fully opaque
+                    }
                 }
 
-                // Draw the image data on the canvas
-                displayCtx.putImageData(imageData, 0, 0);
+                // Draw the image data on the resized canvas
+                displayCtx.putImageData(imgData, 0, 0);
 
                 // Clear the previous result and display the new image
                 resultDiv.innerHTML = '';  // Clear previous result
-                resultDiv.appendChild(displayCanvas);  // Display the generated image on the canvas
+                resultDiv.appendChild(displayCanvas);  // Display the generated map on the canvas
             };
         };
 
         reader.readAsDataURL(file);
     }
 }
-
 
 
 
