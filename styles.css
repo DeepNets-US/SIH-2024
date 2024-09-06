@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #000000;
+    font-family: "Source Code Pro", monospace;
 }
 
 .container {
@@ -37,6 +38,7 @@ input[type="file"] {
     border-radius: 5px;
     border : none;
     color : white;
+    font-size: large;
 }
 
 .detect:hover{
@@ -62,11 +64,24 @@ input[type="file"] {
 
 } */
 
-#modelTag{
-    text-decoration: none;
+
+#modelTag {    
+    font-weight: 600; 
+    text-transform: uppercase; 
+    padding: 15px 20px;
+
+    /* text-decoration: none; */
+    border: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #000000;
+    padding: 1px 25px;
+    font-size: 30px;
+    
+    /* border-bottom: 2px solid #FFFFFF;  */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  */
+
 }
 
 #header {
     border-bottom: 1px solid #636363; 
 }
-
