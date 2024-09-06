@@ -3,7 +3,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #000000;
 }
 
 .container {
@@ -29,3 +29,44 @@ input[type="file"] {
     margin-top: 20px;
     font-size: 1.2em;
 }
+
+.detect{
+    background-color: #000000;
+    /* margin-top : 20px; */
+    padding: 15px 50px;
+    border-radius: 5px;
+    border : none;
+    color : white;
+}
+
+.detect:hover{
+    background-color: rgb(0, 0, 0);
+
+
+}
+
+#resultDiv {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+}
+
+#generatedImage {
+    max-width: 100%;         
+    height: auto;             
+    display: block;          
+    margin: 0 auto;    
+}
+
+/* #imageInput{
+
+} */
+
+#modelTag{
+    text-decoration: none;
+}
+
+#header {
+    border-bottom: 1px solid #636363; 
+}
+

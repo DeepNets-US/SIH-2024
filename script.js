@@ -3,7 +3,7 @@ async function loadModel() {
     try {
         model = await tf.loadGraphModel('./tfjs_model/model.json');
         const modeltag = document.getElementById('modelTag');
-        modeltag.innerHTML = `<u>Try Model (Loaded!)</u>`;
+        modeltag.innerHTML = `Try Model ( Loaded ! )`;
         console.log('Model loaded successfully');
     } catch (error) {
         console.error('Failed to load model:', error);
